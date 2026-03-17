@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import List, Optional
 
 # ==============================================
-# ENTRY SCHEMAS
+# 1. ENTRY SCHEMAS MUST COME FIRST
 # ==============================================
 
 class EntryBase(BaseModel):
@@ -11,6 +11,9 @@ class EntryBase(BaseModel):
     content: str = Field(..., min_length=1)
 
 class EntryCreate(EntryBase):
+    pass
+
+class Entry(EntryBase):
     id: int
     owner_id: int
     created_at: datetime
@@ -18,7 +21,7 @@ class EntryCreate(EntryBase):
     model_config = ConfigDict(from_attributes=True)
 
 # ==============================================
-# USER SCHEMAS
+# 2. USER SCHEMAS COME SECOND
 # ==============================================
 
 class UserBase(BaseModel):
@@ -31,6 +34,6 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     is_active: bool
-    entries: List["Entry"] = []
+    entries: List[Entry] = []
 
     model_config = ConfigDict(from_attributes=True)

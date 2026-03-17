@@ -13,7 +13,7 @@ def get_user_by_username(db: Session, username: str):
     """READ: Find a user by their username"""
     return db.query(models.User).filter(models.User.username == username).first()
 
-def create_user(db: schemas.UserCreate):
+def create_user(db: Session, user: schemas.UserCreate):
     """CREATE: Securely hash the password and save the new user."""
     # 1. Security: Hash the password IMMEDIATELY
     hashed_pwd = security.get_password_hash(user.password)
